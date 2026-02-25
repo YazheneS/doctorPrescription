@@ -1,0 +1,21 @@
+{
+  "name": "automated-prescription-system",
+  "version": "1.0.0",
+  "description": "Automated Prescription System to digitize medical prescriptions and reduce human error.",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "build": "npm run build --prefix client",
+    "start": "npm run start --prefix server"
+  },
+  "keywords": [
+    "mern",
+    "healthcare",
+    "prescriptions"
+  ],
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
