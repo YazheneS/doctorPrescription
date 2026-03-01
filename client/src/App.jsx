@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Login from "./Login";
+import SelectPatient from "./SelectPatient";
+import SelectDoctor from "./SelectDoctor";
 import DoctorDashboard from "./DoctorDashboard";
 import PatientDashboard from "./PatientDashboard";
 
@@ -10,6 +12,8 @@ function App() {
   const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   useEffect(() => {
     // Check if user is already logged in
@@ -33,7 +37,25 @@ function App() {
     setToken(null);
     setRole(null);
     setUser(null);
+    setSelectedPatient(null);
+    setSelectedDoctor(null);
     setIsAuthenticated(false);
+  };
+
+  const handlePatientSelection = (patientInfo) => {
+    setSelectedPatient(patientInfo);
+  };
+
+  const handleDoctorSelection = (doctorInfo) => {
+    setSelectedDoctor(doctorInfo);
+  };
+
+  const handleBackToPatientSelection = () => {
+    setSelectedPatient(null);
+  };
+
+  const handleBackToDoctorSelection = () => {
+    setSelectedDoctor(null);
   };
 
   if (loading) {
@@ -49,8 +71,24 @@ function App() {
   }
 
   if (role === "doctor") {
+    if (!selectedPatient) {
+      return (
+        <SelectPatient
+          user={user}
+          token={token}
+          onPatientSelected={handlePatientSelection}
+          onLogout={handleLogout}
+        />
+      );
+    }
     return (
-      <DoctorDashboard user={user} token={token} onLogout={handleLogout} />
+      <DoctorDashboard
+        user={user}
+        token={token}
+        selectedPatient={selectedPatient}
+        onLogout={handleLogout}
+        onBackToSelection={handleBackToPatientSelection}
+      />
     );
   }
 

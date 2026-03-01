@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const Patient = require("../models/Patient");
+const Doctor = require("../models/Doctor");
 const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
@@ -118,12 +119,63 @@ router.get("/profile", authMiddleware, async (req, res, next) => {
       return res.status(403).json({ message: "Access denied" });
     }
 
-    const patient = await Patient.findById(req.user.id);
+    const patient = await Patient.findById(req.user.id).populate(
+      "selectedDoctor",
+      "name specialization email",
+    );
     if (!patient) {
       return res.status(404).json({ message: "Patient not found" });
     }
 
     res.json(patient.toJSON());
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get all doctors
+router.get("/doctors", async (req, res, next) => {
+  try {
+    const doctors = await Doctor.find({}, "name specialization email").lean();
+    res.json(doctors);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Select a doctor for consultation
+router.put("/select-doctor", authMiddleware, async (req, res, next) => {
+  try {
+    if (req.user.role !== "patient") {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    const { doctorId } = req.body;
+
+    if (!doctorId) {
+      return res.status(400).json({ message: "Doctor ID is required." });
+    }
+
+    // Verify doctor exists
+    const doctor = await Doctor.findById(doctorId);
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found." });
+    }
+
+    // Update patient's selected doctor
+    const patient = await Patient.findByIdAndUpdate(
+      req.user.id,
+      {
+        selectedDoctor: doctorId,
+        consultationDate: new Date(),
+      },
+      { new: true },
+    ).populate("selectedDoctor", "name specialization email");
+
+    res.json({
+      message: "Doctor selected successfully",
+      patient: patient.toJSON(),
+    });
   } catch (error) {
     next(error);
   }

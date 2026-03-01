@@ -1,56 +1,60 @@
 import { useEffect, useMemo, useState } from "react";
 
-function DoctorDashboard({ user, token, onLogout }) {
+function DoctorDashboard({
+  user,
+  token,
+  selectedPatient,
+  onLogout,
+  onBackToSelection,
+}) {
   const [form, setForm] = useState({
-    patientId: "",
-    patientName: "",
     medication: "",
     dosage: "",
     frequency: "",
     notes: "",
     status: "submitted",
   });
-  const [prescriptions, setPrescriptions] = useState([]);
-  const [patients, setPatients] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [patientPrescriptions, setPatientPrescriptions] = useState([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const requiredMissing = useMemo(() => {
-    return (
-      !form.patientId.trim() ||
-      !form.medication.trim() ||
-      !form.dosage.trim() ||
-      !form.frequency.trim()
-    );
-  }, [form]);
-
+  // Pre-fill patient ID and name from selected patient
   useEffect(() => {
-    fetchPrescriptions();
-  }, [token]);
+    if (selectedPatient) {
+      fetchPatientPrescriptions();
+    }
+  }, [selectedPatient, token]);
 
-  const fetchPrescriptions = async () => {
+  const fetchPatientPrescriptions = async () => {
     try {
       const response = await fetch("/api/prescriptions", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Failed to load prescriptions");
-      const data = await response.json();
-      setPrescriptions(data);
+      const allPrescriptions = await response.json();
+
+      // Filter to only show prescriptions for the selected patient
+      const filtered = allPrescriptions.filter(
+        (rx) =>
+          rx.patientId._id === selectedPatient.patientDetails._id ||
+          rx.patientId === selectedPatient.patientDetails._id,
+      );
+      setPatientPrescriptions(filtered);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.error("Error fetching patient prescriptions:", err.message);
     }
   };
+
+  const requiredMissing = useMemo(() => {
+    return (
+      !form.medication.trim() || !form.dosage.trim() || !form.frequency.trim()
+    );
+  }, [form]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handlePatientSelect = (patientId, patientName) => {
-    setForm((prev) => ({ ...prev, patientId, patientName }));
   };
 
   const handleSubmit = async (e) => {
@@ -62,6 +66,7 @@ function DoctorDashboard({ user, token, onLogout }) {
 
     setSaving(true);
     setError("");
+    setSuccessMessage("");
 
     try {
       const response = await fetch("/api/prescriptions", {
@@ -70,7 +75,11 @@ function DoctorDashboard({ user, token, onLogout }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          patientId: selectedPatient.patientId,
+          patientName: selectedPatient.patientName,
+          ...form,
+        }),
       });
 
       if (!response.ok) {
@@ -79,16 +88,16 @@ function DoctorDashboard({ user, token, onLogout }) {
       }
 
       const saved = await response.json();
-      setPrescriptions((prev) => [saved, ...prev]);
+      setPatientPrescriptions((prev) => [saved, ...prev]);
       setForm({
-        patientId: "",
-        patientName: "",
         medication: "",
         dosage: "",
         frequency: "",
         notes: "",
         status: "submitted",
       });
+      setSuccessMessage("Prescription created successfully!");
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -97,54 +106,153 @@ function DoctorDashboard({ user, token, onLogout }) {
   };
 
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <div>
-          <h1>Welcome, Dr. {user.name}</h1>
-          <p>Manage prescriptions for your patients</p>
+    <div className="doctor-prescription-page">
+      <header className="prescription-header">
+        <div className="header-left">
+          <button onClick={onBackToSelection} className="back-button">
+            ← Back to Patient Selection
+          </button>
+          <div className="header-title">
+            <h1>Create Prescription</h1>
+            <p className="selected-patient">
+              Patient: <strong>{selectedPatient.patientName}</strong> (
+              {selectedPatient.patientId})
+            </p>
+          </div>
         </div>
         <button onClick={onLogout} className="logout-button">
           Logout
         </button>
       </header>
 
-      <main className="dashboard-grid">
-        <section className="prescription-form">
-          <h2>Create New Prescription</h2>
+      <main className="prescription-main">
+        <section className="medical-history-panel">
+          <h2>Patient Medical History</h2>
+
+          {selectedPatient.patientDetails?.previousMedicationHistory?.length >
+            0 && (
+            <div className="uploaded-history-block">
+              <h3>Uploaded Previous Medication Documents</h3>
+              <div className="uploaded-medications-list">
+                {selectedPatient.patientDetails.previousMedicationHistory
+                  .slice()
+                  .sort(
+                    (a, b) =>
+                      new Date(b.uploadedAt).getTime() -
+                      new Date(a.uploadedAt).getTime(),
+                  )
+                  .slice(0, 5)
+                  .map((entry) => (
+                    <div
+                      key={
+                        entry._id ||
+                        `${entry.sourceFileName}-${entry.uploadedAt}`
+                      }
+                      className="history-card"
+                    >
+                      <div className="history-card-header">
+                        <h4>{entry.sourceFileName || "Uploaded document"}</h4>
+                        <span className="patient-id-badge">
+                          {entry.uploadedAt
+                            ? new Date(entry.uploadedAt).toLocaleDateString()
+                            : "Date N/A"}
+                        </span>
+                      </div>
+                      <p className="text-muted-small">
+                        Parsed by: {entry.parsedBy || "rule-based"}
+                        {entry.detectedLanguage
+                          ? ` • Language: ${entry.detectedLanguage}`
+                          : ""}
+                      </p>
+                      {entry.medications?.length ? (
+                        entry.medications
+                          .slice(0, 6)
+                          .map((medication, index) => (
+                            <p
+                              key={`${medication.rawLine}-${index}`}
+                              className="text-muted-small"
+                            >
+                              {medication.name || "Medication"}
+                              {medication.dosage
+                                ? ` • ${medication.dosage}`
+                                : ""}
+                              {medication.frequency
+                                ? ` • ${medication.frequency}`
+                                : ""}
+                              {medication.route ? ` • ${medication.route}` : ""}
+                              {medication.duration
+                                ? ` • ${medication.duration}`
+                                : ""}
+                              {medication.indication
+                                ? ` • ${medication.indication}`
+                                : ""}
+                            </p>
+                          ))
+                      ) : (
+                        <p className="text-muted-small">
+                          OCR completed, but no structured medications were
+                          found.
+                        </p>
+                      )}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {patientPrescriptions.length === 0 ? (
+            <div className="empty-history">
+              <p>No previous prescriptions for this patient</p>
+            </div>
+          ) : (
+            <div className="history-list">
+              {patientPrescriptions.map((rx) => (
+                <div key={rx._id} className="history-card">
+                  <div className="history-card-header">
+                    <h4>{rx.medication}</h4>
+                    <span className={`badge ${rx.status}`}>{rx.status}</span>
+                  </div>
+                  <div className="history-card-body">
+                    <div className="detail-row">
+                      <span className="detail-label">Dosage</span>
+                      <span className="detail-value">{rx.dosage}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">Frequency</span>
+                      <span className="detail-value">{rx.frequency}</span>
+                    </div>
+                    {rx.notes && (
+                      <div className="detail-row">
+                        <span className="detail-label">Notes</span>
+                        <span className="detail-value">{rx.notes}</span>
+                      </div>
+                    )}
+                    <div className="detail-row date">
+                      <span className="detail-label">Date</span>
+                      <span className="detail-value">
+                        {new Date(rx.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="prescription-form-panel">
+          <h2>New Prescription</h2>
 
           <form onSubmit={handleSubmit} className="form">
-            <div className="form-group">
-              <label>Patient ID *</label>
-              <input
-                type="text"
-                name="patientId"
-                value={form.patientId}
-                onChange={handleChange}
-                placeholder="PT-abc123-xyz9"
-              />
-              <small className="text-muted-small">
-                Enter the Patient ID provided after patient registration.
-              </small>
-            </div>
-
-            <div className="form-group">
-              <label>Patient Name (optional)</label>
-              <input
-                type="text"
-                name="patientName"
-                value={form.patientName}
-                onChange={handleChange}
-                placeholder="Patient name"
-                list="patients-list"
-              />
-              <datalist id="patients-list">
-                <option value="">Search patients...</option>
-              </datalist>
-              {form.patientName && (
-                <small className="text-success">
-                  Patient name recorded for reference.
-                </small>
-              )}
+            <div className="patient-info-display">
+              <div className="info-badge">
+                <span className="label">Patient Name</span>
+                <p>{selectedPatient.patientName}</p>
+              </div>
+              <div className="info-badge">
+                <span className="label">Patient ID</span>
+                <p>{selectedPatient.patientId}</p>
+              </div>
             </div>
 
             <div className="form-group">
@@ -204,7 +312,10 @@ function DoctorDashboard({ user, token, onLogout }) {
               </select>
             </div>
 
-            {error && <div className="error">{error}</div>}
+            {error && <div className="error-message">{error}</div>}
+            {successMessage && (
+              <div className="success-message">{successMessage}</div>
+            )}
 
             <button
               type="submit"
@@ -214,60 +325,6 @@ function DoctorDashboard({ user, token, onLogout }) {
               {saving ? "Saving..." : "Create Prescription"}
             </button>
           </form>
-        </section>
-
-        <section className="prescriptions-list">
-          <h2>Recent Prescriptions</h2>
-
-          {loading ? (
-            <p className="text-muted">Loading...</p>
-          ) : prescriptions.length === 0 ? (
-            <p className="text-muted">No prescriptions yet</p>
-          ) : (
-            <div className="cards">
-              {prescriptions.map((rx) => (
-                <div key={rx._id} className="card">
-                  <div className="card-header">
-                    <h3>{rx.medication}</h3>
-                    <span className={`badge ${rx.status}`}>{rx.status}</span>
-                  </div>
-
-                  <div className="card-body">
-                    <div className="card-row">
-                      <div>
-                        <span className="label">Patient</span>
-                        <p className="value">{rx.patientName}</p>
-                      </div>
-                      <div>
-                        <span className="label">Dosage & Frequency</span>
-                        <p className="value">
-                          {rx.dosage} · {rx.frequency}
-                        </p>
-                      </div>
-                    </div>
-
-                    {rx.notes && (
-                      <div className="card-notes">
-                        <span className="label">Notes</span>
-                        <p>{rx.notes}</p>
-                      </div>
-                    )}
-
-                    <div className="card-footer">
-                      {rx.patientId && rx.patientId.email && (
-                        <small>Patient: {rx.patientId.email}</small>
-                      )}
-                      {rx.createdAt && (
-                        <small>
-                          {new Date(rx.createdAt).toLocaleDateString()}
-                        </small>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </section>
       </main>
     </div>

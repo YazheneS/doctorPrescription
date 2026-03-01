@@ -52,6 +52,98 @@ const PatientSchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
+    selectedDoctor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Doctor",
+      default: null,
+    },
+    consultationDate: {
+      type: Date,
+      default: null,
+    },
+    previousMedicationHistory: [
+      {
+        sourceFileName: {
+          type: String,
+          trim: true,
+          default: "",
+        },
+        sourceMimeType: {
+          type: String,
+          trim: true,
+          default: "",
+        },
+        extractedText: {
+          type: String,
+          trim: true,
+          default: "",
+        },
+        medications: [
+          {
+            name: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            dosage: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            frequency: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            route: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            duration: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            indication: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            instructions: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+            confidence: {
+              type: Number,
+              min: 0,
+              max: 1,
+              default: null,
+            },
+            rawLine: {
+              type: String,
+              trim: true,
+              default: "",
+            },
+          },
+        ],
+        detectedLanguage: {
+          type: String,
+          trim: true,
+          default: "",
+        },
+        parsedBy: {
+          type: String,
+          trim: true,
+          default: "rule-based",
+        },
+        uploadedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true },
 );
