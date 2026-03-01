@@ -3,6 +3,7 @@
 ## ✅ Pre-Commit Security Verification
 
 ### Protected Files Status:
+
 - ✅ **server/.gitignore** - Protects .env files and API keys
 - ✅ **client/.gitignore** - Protects environment variables
 - ✅ **root .gitignore** - Project-wide protection
@@ -10,6 +11,7 @@
 - 🔒 **.env** - Contains real API keys (PROTECTED, will not be pushed)
 
 ### Sensitive Files (Protected by .gitignore):
+
 - 🔒 `server/.env` - Contains:
   - Azure Document Intelligence API Key
   - Groq API Key
@@ -24,12 +26,14 @@
 ## 📋 Git Commands to Push to GitHub
 
 ### Step 1: Initialize Git (if not already done)
+
 ```bash
 cd C:\Users\YAZHENE\Documents\IOT
 git init
 ```
 
 ### Step 2: Verify .gitignore is working
+
 ```bash
 # Check what will be committed (should NOT see .env files)
 git status
@@ -40,11 +44,13 @@ git check-ignore server/.env
 ```
 
 ### Step 3: Add all files
+
 ```bash
 git add .
 ```
 
 ### Step 4: Verify files to be committed
+
 ```bash
 # List files that will be committed
 git diff --cached --name-only
@@ -57,11 +63,13 @@ git diff --cached --name-only
 ```
 
 ### Step 5: Commit your changes
+
 ```bash
 git commit -m "feat: Complete MERN prescription system with AI parsing and Azure VM deployment"
 ```
 
 ### Step 6: Create GitHub repository
+
 1. Go to https://github.com/new
 2. Repository name: `prescription-system` (or your preferred name)
 3. Description: "AI-powered prescription management system - MERN stack"
@@ -70,6 +78,7 @@ git commit -m "feat: Complete MERN prescription system with AI parsing and Azure
 6. Click "Create repository"
 
 ### Step 7: Link to GitHub and push
+
 ```bash
 # Add remote (replace YOUR_USERNAME)
 git remote add origin https://github.com/YOUR_USERNAME/prescription-system.git
@@ -159,6 +168,7 @@ git commit -m "feat: Complete MERN prescription system with AI parsing
 ## 🎯 After Pushing to GitHub
 
 ### Clone on Azure VM:
+
 ```bash
 # On Azure VM
 git clone https://github.com/YOUR_USERNAME/prescription-system.git IOT
@@ -166,6 +176,7 @@ cd IOT
 ```
 
 ### Configure production environment:
+
 ```bash
 # Copy example and edit with real values
 cd server
@@ -174,6 +185,7 @@ nano .env  # Add your production API keys
 ```
 
 ### Deploy:
+
 ```bash
 chmod +x deploy-azure-vm.sh
 ./deploy-azure-vm.sh
@@ -194,6 +206,7 @@ chmod +x deploy-azure-vm.sh
 ## 🆘 If You Accidentally Committed API Keys
 
 ### Remove from history:
+
 ```bash
 # Remove .env from Git history
 git filter-branch --force --index-filter \
@@ -205,6 +218,7 @@ git push origin --force --all
 ```
 
 ### Then immediately:
+
 1. **Regenerate all API keys** on Azure and Groq
 2. Update your local .env with new keys
 3. Deploy with new keys
@@ -216,16 +230,19 @@ git push origin --force --all
 All three .gitignore files are configured:
 
 ### Root .gitignore
+
 - Protects .env files project-wide
 - Ignores node_modules, uploads, temp files
 - Blocks IDE files and logs
 
 ### server/.gitignore
+
 - Environment files (.env, .env.local, .env.production)
 - Dependencies and build outputs
 - Logs and coverage reports
 
 ### client/.gitignore
+
 - Environment variables
 - Build outputs (dist/)
 - Vite cache files
@@ -238,6 +255,7 @@ All three .gitignore files are configured:
 Your project is secure and ready for GitHub. Follow the steps above and you're all set!
 
 **Summary:**
+
 1. ✅ All .gitignore files in place
 2. ✅ API keys protected
 3. ✅ Safe template files included
