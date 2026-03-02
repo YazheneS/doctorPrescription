@@ -34,7 +34,7 @@
 }
 
 .stats {
-  background: linear-gradient(135deg, #e9f7ff, #f7fbff);
+  background: linear-gradient(135deg, #E5E5F0, #D4E7F7);
   border: 1px solid rgba(17, 24, 39, 0.08);
   border-radius: 20px;
   padding: 24px;
@@ -218,13 +218,13 @@ button:not(:disabled):hover {
 }
 
 .pill.submitted {
-  background: #dbeafe;
+  background: #D4E7F7;
   color: #1d4ed8;
 }
 
 .pill.draft {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: #E5E5F0;
+  color: #6b21a8;
 }
 
 @media (max-width: 980px) {
@@ -249,7 +249,7 @@ button:not(:disabled):hover {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDC1F2 100%);
   color: white;
   font-size: 1.2rem;
   font-weight: 500;
@@ -260,7 +260,7 @@ button:not(:disabled):hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDD9F2 50%, #BDC1F2 100%);
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -275,7 +275,7 @@ button:not(:disabled):hover {
   height: 100%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.1) 0%,
+   #CCCCFF 0%,
     transparent 70%
   );
   animation: float 20s ease-in-out infinite;
@@ -292,7 +292,7 @@ button:not(:disabled):hover {
 }
 
 .login-card {
-  background: white;
+  background: #E5E5F0;
   border-radius: 24px;
   padding: 48px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
@@ -301,7 +301,7 @@ button:not(:disabled):hover {
   position: relative;
   z-index: 1;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #290245;
 }
 
 .back-button {
@@ -312,7 +312,7 @@ button:not(:disabled):hover {
   border: 1px solid var(--border-color);
   font-size: 0.95rem;
   cursor: pointer;
-  color: var(--primary);
+  color: #94AEE3;
   font-weight: 600;
   padding: 10px 16px;
   border-radius: var(--radius-md);
@@ -323,8 +323,8 @@ button:not(:disabled):hover {
 }
 
 .back-button:hover {
-  background: var(--primary);
-  color: white;
+  background: #B5C7EB;
+  color: #E5E5F0;
   transform: translateX(-4px);
   box-shadow: var(--shadow-md);
 }
@@ -333,7 +333,7 @@ button:not(:disabled):hover {
   text-align: center;
   margin: 0 0 12px;
   font-size: 2rem;
-  color: var(--gray-900);
+  color: #290245;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -342,14 +342,14 @@ button:not(:disabled):hover {
   text-align: center;
   margin: 20px 0 30px;
   font-size: 1.6rem;
-  color: var(--gray-800);
+  color: #450474;
   font-weight: 600;
 }
 
 .login-card .subtitle {
   text-align: center;
   font-size: 1rem;
-  color: var(--text-muted);
+  color: #2F0A61;
   margin-bottom: 40px;
   line-height: 1.6;
 }
@@ -369,7 +369,7 @@ button:not(:disabled):hover {
   padding: 32px 24px;
   border: 2px solid var(--border-color);
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(135deg, #B8E3E9 0%, #B5C7EB 100%);
   cursor: pointer;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
@@ -440,7 +440,7 @@ button:not(:disabled):hover {
 .form-group label {
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--gray-800);
+  color: #341539;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 4px;
@@ -462,18 +462,18 @@ button:not(:disabled):hover {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+  border-color: #6C3BAA;
+  box-shadow: 0 0 0 4px #2F0A61;
   transform: translateY(-1px);
 }
 
 .error-message {
   padding: 16px 20px;
-  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-  color: #991b1b;
+  background: linear-gradient(135deg, #F8E4FF 0%, #E5E5F0 100%);
+  color: #6b21a8;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
-  border-left: 4px solid var(--danger);
+  border-left: 4px solid #a57eda;
   box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
@@ -487,11 +487,11 @@ button:not(:disabled):hover {
 
 .success-message {
   padding: 16px 20px;
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-  color: #166534;
+  background: linear-gradient(135deg, #D4E7F7 0%, #C5E4F7 100%);
+  color: #0c4a6e;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
-  border-left: 4px solid var(--success);
+  border-left: 4px solid #B8E3E9;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -505,12 +505,12 @@ button:not(:disabled):hover {
 
 .error {
   padding: 16px 20px;
-  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-  color: #991b1b;
+  background: linear-gradient(135deg, #F8E4FF 0%, #E5E5F0 100%);
+  color: #6b21a8;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   margin: 12px 0;
-  border-left: 4px solid var(--danger);
+  border-left: 4px solid #a57eda;
   box-shadow: var(--shadow-sm);
 }
 
@@ -570,7 +570,7 @@ button:not(:disabled):hover {
 .toggle-button {
   background: none;
   border: none;
-  color: #667eea;
+  color: #a57eda;
   font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
@@ -579,7 +579,7 @@ button:not(:disabled):hover {
 }
 
 .toggle-button:hover {
-  color: #764ba2;
+  color: #8e5cc7;
 }
 
 /* Dashboard Styles */
@@ -587,7 +587,7 @@ button:not(:disabled):hover {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDD9F2 50%, #BDC1F2 100%);
 }
 
 .dashboard-header {
@@ -664,6 +664,22 @@ button:not(:disabled):hover {
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-header .logout-button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: 2px solid transparent;
+  padding: 12px 28px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.dashboard-header .logout-button:hover {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .patient-dashboard-header .logout-button,
@@ -854,15 +870,15 @@ button:not(:disabled):hover {
 }
 
 .badge.submitted {
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-  color: #15803d;
-  border: 1px solid #86efac;
+  background: linear-gradient(135deg, #D4E7F7 0%, #C5E4F7 100%);
+  color: #0c4a6e;
+  border: 1px solid #B8E3E9;
 }
 
 .badge.draft {
-  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
-  color: #9a3412;
-  border: 1px solid #fb923c;
+  background: linear-gradient(135deg, #E5E5F0 0%, #D4C5E8 100%);
+  color: #6b21a8;
+  border: 1px solid #B5A8E0;
 }
 
 .card-body {
@@ -1042,13 +1058,13 @@ button:not(:disabled):hover {
 }
 
 .status-badge.submitted {
-  background: #dcfce7;
-  color: #166534;
+  background: #D4E7F7;
+  color: #0c4a6e;
 }
 
 .status-badge.draft {
-  background: #fed7aa;
-  color: #92400e;
+  background: #E5E5F0;
+  color: #6b21a8;
 }
 
 .patient-info {
@@ -1153,7 +1169,7 @@ button:not(:disabled):hover {
   padding: 8px;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  background: #f8fafc;
+  background: #F3F4F6;
 }
 
 .patient-item {
@@ -1243,7 +1259,7 @@ button:not(:disabled):hover {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDD9F2 50%, #BDC1F2 100%);
   position: relative;
   overflow: hidden;
 }
@@ -1292,19 +1308,19 @@ button:not(:disabled):hover {
 }
 
 .back-button {
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  background: #E5E5F0;
+  border: 1px solid #B5A8E0;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #475569;
+  color: #6b21a8;
   transition: all 200ms;
 }
 
 .back-button:hover {
-  background: #e2e8f0;
-  color: #1e293b;
+  background: #D4C5E8;
+  color: #581c87;
 }
 
 .header-title h1 {
@@ -1373,7 +1389,7 @@ button:not(:disabled):hover {
 /* SelectPatient Page Styles */
 .select-patient-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDD9F2 50%, #BDC1F2 100%);
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -1406,21 +1422,37 @@ button:not(:disabled):hover {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-  color: white;
+  color: #341539;
 }
 
 .select-patient-header h1 {
   margin: 0;
   font-size: 2.5rem;
-  color: white;
+  color: #341539;
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .select-patient-header .subtitle {
-  color: rgba(255, 255, 255, 0.95);
+  color: #341539;
   margin: 8px 0 0 0;
   font-size: 1.1rem;
+}
+
+.select-patient-header .logout-button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: 2px solid transparent;
+  padding: 12px 28px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.select-patient-header .logout-button:hover {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .search-section {
@@ -1431,7 +1463,7 @@ button:not(:disabled):hover {
   width: 100%;
   padding: 16px 20px;
   font-size: 1rem;
-  border: 2px solid var(--border-color);
+  border: 2px solid #341539;
   border-radius: var(--radius-md);
   background: white;
   box-shadow: var(--shadow-sm);
@@ -1455,7 +1487,7 @@ button:not(:disabled):hover {
 .doctor-card,
 .patient-card {
   background: white;
-  border: 2px solid var(--border-color);
+  border: 2px solid #341539;
   border-radius: var(--radius-lg);
   padding: 24px;
   cursor: pointer;
@@ -1527,7 +1559,7 @@ button:not(:disabled):hover {
 }
 
 .new-badge {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #9580d4 100%);
   color: white;
   padding: 5px 12px;
   border-radius: var(--radius-full);
@@ -1550,7 +1582,7 @@ button:not(:disabled):hover {
 }
 
 .consulted-badge {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #B8E3E9 0%, #B5C7EB 100%);
   color: white;
   padding: 5px 12px;
   border-radius: var(--radius-full);
@@ -1637,7 +1669,7 @@ button:not(:disabled):hover {
 /* SelectDoctor Page Styles */
 .select-doctor-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDD9F2 50%, #BDC1F2 100%);
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -1670,21 +1702,37 @@ button:not(:disabled):hover {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-  color: white;
+  color: #341539;
 }
 
 .select-doctor-header h1 {
   margin: 0;
   font-size: 2.5rem;
-  color: white;
+  color: #341539;
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .select-doctor-header .subtitle {
-  color: rgba(255, 255, 255, 0.95);
+  color: #341539;
   margin: 8px 0 0 0;
   font-size: 1.1rem;
+}
+
+.select-doctor-header .logout-button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: 2px solid transparent;
+  padding: 12px 28px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.select-doctor-header .logout-button:hover {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .select-doctor-content {
@@ -1738,7 +1786,7 @@ button:not(:disabled):hover {
 }
 
 .specialization-badge {
-  background: #667eea;
+  background: #a57eda;
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
@@ -1792,7 +1840,7 @@ button:not(:disabled):hover {
 /* Doctor Prescription Page Styles */
 .doctor-prescription-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a57eda 0%, #BDD9F2 50%, #BDC1F2 100%);
   position: relative;
   overflow: hidden;
 }
@@ -1891,7 +1939,7 @@ button:not(:disabled):hover {
 
 .prescription-header .logout-button {
   padding: 12px 28px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: white;
   border: 2px solid transparent;
   border-radius: var(--radius-md);
@@ -1904,7 +1952,7 @@ button:not(:disabled):hover {
 }
 
 .prescription-header .logout-button:hover {
-  background: linear-gradient(135deg, var(--info) 0%, var(--primary) 100%);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -2369,8 +2417,8 @@ button:not(:disabled):hover {
 
 .success-message {
   padding: 12px 16px;
-  background: #dcfce7;
-  color: #166534;
+  background: #D4E7F7;
+  color: #0c4a6e;
   border-radius: 6px;
   margin-bottom: 16px;
   font-weight: 500;

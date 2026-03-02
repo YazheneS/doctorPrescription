@@ -13,16 +13,16 @@
 }
 
 :root {
-  /* Modern Medical Color Palette */
-  --primary: #0ea5e9;
-  --primary-dark: #0284c7;
-  --primary-light: #7dd3fc;
-  --secondary: #8b5cf6;
-  --secondary-dark: #7c3aed;
+  /* Modern Medical Color Palette - Soft Pastels */
+  --primary: #a57eda;
+  --primary-dark: #8e5cc7;
+  --primary-light: #c5a3f0;
+  --secondary: #bdd9f2;
+  --secondary-dark: #9ac0e0;
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --info: #06b6d4;
+  --info: #b8e3e9;
 
   /* Neutrals */
   --gray-50: #f8fafc;
