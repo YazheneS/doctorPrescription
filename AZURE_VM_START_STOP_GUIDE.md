@@ -132,9 +132,9 @@ Only when it says **Deallocated**, billing stops.
 
 # 🔎 Important Notes
 
-* If you close SSH without stopping VM → Azure still charges.
-* If VM restarts → you must manually start backend and frontend again.
-* Public IP usually remains the same unless not configured as static.
+- If you close SSH without stopping VM → Azure still charges.
+- If VM restarts → you must manually start backend and frontend again.
+- Public IP usually remains the same unless not configured as static.
 
 ---
 

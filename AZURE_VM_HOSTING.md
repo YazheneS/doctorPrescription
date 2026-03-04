@@ -8,11 +8,11 @@ This document explains the complete process of deploying a MERN (MongoDB, Expres
 
 # 🏗 Architecture Overview
 
-* **Frontend:** React (Vite)
-* **Backend:** Node.js + Express
-* **Database:** MongoDB Atlas (Cloud Database)
-* **Hosting:** Azure Virtual Machine (Ubuntu 24.04 LTS)
-* **Source Code:** GitHub Repository
+- **Frontend:** React (Vite)
+- **Backend:** Node.js + Express
+- **Database:** MongoDB Atlas (Cloud Database)
+- **Hosting:** Azure Virtual Machine (Ubuntu 24.04 LTS)
+- **Source Code:** GitHub Repository
 
 ---
 
@@ -21,15 +21,14 @@ This document explains the complete process of deploying a MERN (MongoDB, Expres
 1. Login to Azure Portal.
 2. Create a new **Virtual Machine**.
 3. Choose:
+   - OS: Ubuntu 24.04 LTS
+   - Authentication type: SSH Key
 
-   * OS: Ubuntu 24.04 LTS
-   * Authentication type: SSH Key
 4. Download the `.pem` key file.
 5. Open required ports:
-
-   * 22 (SSH)
-   * 5000 (Backend)
-   * 4173 (Frontend)
+   - 22 (SSH)
+   - 5000 (Backend)
+   - 4173 (Frontend)
 
 ---
 
@@ -88,6 +87,7 @@ cd <repo-name>
    ```
    0.0.0.0/0
    ```
+
 3. Create database user.
 4. Get connection string:
 
@@ -198,31 +198,31 @@ In Azure Portal → VM → Networking → Add Inbound Rules:
 
 Application successfully hosted on Azure VM:
 
-* Backend running on port 5000
-* Frontend running on port 4173
-* MongoDB connected via Atlas
-* Publicly accessible via VM Public IP
+- Backend running on port 5000
+- Frontend running on port 4173
+- MongoDB connected via Atlas
+- Publicly accessible via VM Public IP
 
 ---
 
 # 📚 What Was Achieved
 
-* Cloud VM provisioning
-* SSH configuration
-* Environment variable setup
-* MongoDB Atlas cloud integration
-* Firewall configuration
-* Production build deployment
+- Cloud VM provisioning
+- SSH configuration
+- Environment variable setup
+- MongoDB Atlas cloud integration
+- Firewall configuration
+- Production build deployment
 
 ---
 
 # 🚀 Future Improvements (Production Ready Setup)
 
-* Use PM2 to keep backend running permanently
-* Configure Nginx reverse proxy
-* Serve application on port 80
-* Add custom domain
-* Enable HTTPS (SSL certificate)
+- Use PM2 to keep backend running permanently
+- Configure Nginx reverse proxy
+- Serve application on port 80
+- Add custom domain
+- Enable HTTPS (SSL certificate)
 
 ---
 
@@ -230,11 +230,11 @@ Application successfully hosted on Azure VM:
 
 This project demonstrates full-stack cloud deployment of a MERN application using:
 
-* Azure Virtual Machine
-* MongoDB Atlas
-* Node.js & Express
-* React (Vite)
-* GitHub version control
+- Azure Virtual Machine
+- MongoDB Atlas
+- Node.js & Express
+- React (Vite)
+- GitHub version control
 
 The application is publicly accessible and successfully integrated with a cloud database.
 

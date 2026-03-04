@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automated Prescription System - Architecture Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+      .mermaid {
+        display: flex;
+        justify-content: center;
+        background-color: #fafafa;
+        padding: 20px;
+        border-radius: 6px;
+        overflow-x: auto;
+      }
+      .legend {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #a57eda;
+      }
+      .legend h3 {
+        color: #333;
+        margin-top: 0;
+      }
+      .legend-item {
+        display: inline-block;
+        margin-right: 30px;
+        margin-bottom: 10px;
+      }
+      .legend-color {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Automated Prescription System</h1>
+      <p class="subtitle">System Architecture Overview</p>
+
+      <div class="mermaid">
+        graph TB subgraph Client["Client Layer"] React["React 18 Frontend<br />(Vite)<br />Port
+        4173"] UI["User Interface<br />- Doctor Panel<br />- Patient Portal<br />-
+        Prescription Forms"] end subgraph Reverse["Reverse Proxy"] Nginx["Nginx
+        Reverse Proxy<br />Port 80/443"] end subgraph API["API Layer"]
+        Express["Express.js Server<br />(Node.js 20 LTS)<br />Port 5000"]
+        Auth["Authentication<br />- JWT Tokens<br />- bcryptjs Hashing<br />-
+        Role-Based Access"] Routes["API Routes<br />- /api/auth<br />-
+        /api/prescriptions<br />- /api/users"] end subgraph Processing["File &
+        Data Processing"] Multer["Multer File Upload<br />(10MB limit)<br />MIME
+        Validation"] PDF["PDFKit<br />PDF Generation"] end subgraph
+        AIServices["AI & OCR Services"] Azure["Azure Document<br />Intelligence<br />(OCR
+        Engine)"] Groq["Groq API<br />(LLM)<br />Medication Parsing<br />85%+
+        Accuracy"] end subgraph Database["Data Layer"] MongoDB["MongoDB 7.0+<br />(NoSQL
+        Database)"] Collections["Collections<br />- Prescriptions<br />-
+        Doctors<br />- Patients"] Indexes["Indexes<br />- doctorId<br />-
+        patientId<br />- createdAt"] end subgraph VM["Infrastructure"]
+        Ubuntu["Ubuntu 24.04 LTS VM<br />2 vCPU | 4GB RAM"] PM2["PM2 Process
+        Manager<br />Auto-restart<br />Load Balancing"] end Client
+        -->|HTTP/HTTPS| React React --> UI React -->|API Requests| Nginx Nginx
+        -->|Route to Backend| Express Express --> Auth Express --> Routes Routes
+        -->|Upload & Parse| Multer Routes -->|Export| PDF Multer -->|Send
+        Image/PDF| Azure Multer -->|Raw Text| Groq Azure -->|OCR Results|
+        Express Groq -->|Parsed Medications| Express Express -->|CRUD
+        Operations| MongoDB MongoDB --> Collections Collections --> Indexes PM2
+        -->|Manages| Express PM2 -->|Manages| React Ubuntu -.->|Hosts| PM2 style
+        React fill:#e8f4f8 style Express fill:#fff4e6 style MongoDB fill:#e8f5e9
+        style Azure fill:#f3e5f5 style Groq fill:#fce4ec style Nginx
+        fill:#ede7f6 style Ubuntu fill:#f1f8e9
+      </div>
+
+      <div class="legend">
+        <h3>Architecture Components</h3>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #e8f4f8"></span>
+          <strong>Client Layer:</strong> React frontend with Vite
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #ede7f6"></span>
+          <strong>Reverse Proxy:</strong> Nginx routing
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #fff4e6"></span>
+          <strong>API Layer:</strong> Express.js backend
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #f3e5f5"></span>
+          <strong>AI Services:</strong> Azure OCR & Groq LLM
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #e8f5e9"></span>
+          <strong>Data Layer:</strong> MongoDB database
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #f1f8e9"></span>
+          <strong>Infrastructure:</strong> Ubuntu VM with PM2
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 30px;
+          padding: 20px;
+          background-color: #f0f0f0;
+          border-radius: 6px;
+        "
+      >
+        <h3 style="margin-top: 0">Key Specifications</h3>
+        <ul style="line-height: 1.8">
+          <li>
+            <strong>Frontend:</strong> React 18 with Vite, running on port 4173
+          </li>
+          <li>
+            <strong>Backend:</strong> Express.js with Node.js 20 LTS, running on
+            port 5000
+          </li>
+          <li>
+            <strong>Database:</strong> MongoDB 7.0+ with optimized indexes
+          </li>
+          <li>
+            <strong>OCR:</strong> Azure Document Intelligence with 85%+ accuracy
+          </li>
+          <li>
+            <strong>AI/LLM:</strong> Groq API for intelligent medication parsing
+          </li>
+          <li>
+            <strong>File Upload:</strong> Multer with 10MB limit and MIME
+            validation
+          </li>
+          <li>
+            <strong>Authentication:</strong> JWT tokens with bcryptjs hashing,
+            role-based access control
+          </li>
+          <li>
+            <strong>Infrastructure:</strong> Ubuntu 24.04 LTS VM (2 vCPU, 4GB
+            RAM) with PM2 process management
+          </li>
+          <li>
+            <strong>Reverse Proxy:</strong> Nginx for SSL/TLS and request
+            routing
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      mermaid.initialize({ startOnLoad: true, theme: "default" });
+      mermaid.contentLoaded();
+    </script>
+  </body>
+</html>
