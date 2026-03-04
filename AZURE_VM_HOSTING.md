@@ -92,16 +92,12 @@ cd <repo-name>
 4. Get connection string:
 
 ```
-mongodb+srv://username:password@cluster.mongodb.net/databaseName
+mongodb+srv://dbUser:<db_password>@cluster0.xxxxx.mongodb.net/
 ```
 
 If password contains `@`, encode it as `%40`.
 
-Example:
 
-```
-Yazhene@2006 → Yazhene%402006
-```
 
 ---
 
@@ -118,7 +114,7 @@ Add:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/databaseName
+MONGODB_URI=mongodb+srv://dbUser:<db_password>@cluster0.xxxxx.mongodb.net/
 JWT_SECRET=your_secret_key
 CLIENT_ORIGIN=http://<public-ip>:4173
 ```
