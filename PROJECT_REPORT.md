@@ -1152,7 +1152,7 @@ GET    /api/prescriptions/download/:id
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/db
+MONGODB_URI=mongodb+srv://username:<password>@cluster.mongodb.net/db
 CLIENT_ORIGIN=http://localhost:5173,http://<vm-ip>:4173
 JWT_SECRET=<random-secret-key>
 AZURE_DOC_INTELLIGENCE_ENDPOINT=<azure-endpoint>
